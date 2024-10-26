@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Fare Prediction Form</title>
+    
+    <!-- Font Awesome CSS for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 120vh;
+            color: #333;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            color: #333;
+        }
+
+        .form-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #4CAF50;
+        }
+
+        input[type="number"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Car Fare Prediction</h1>
+        <form action="{% url 'home' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="passenger_count"><i class="fas fa-user"></i> Passenger Count:</label>
+                <input type="number" id="passenger_count" name="passenger_count" required>
+            </div>
+
+            <div class="form-group">
+                <label for="hour"><i class="fas fa-clock"></i> Hour:</label>
+                <input type="number" id="hour" name="hour" min="0" max="23" required>
+            </div>
+
+            <div class="form-group">
+                <label for="day"><i class="fas fa-calendar-day"></i> Day:</label>
+                <input type="number" id="day" name="day" min="1" max="31" required>
+            </div>
+
+            <div class="form-group">
+                <label for="month"><i class="fas fa-calendar-alt"></i> Month:</label>
+                <input type="number" id="month" name="month" min="1" max="12" required>
+            </div>
+
+            <div class="form-group">
+                <label for="weekday"><i class="fas fa-calendar-week"></i> Weekday:</label>
+                <input type="number" id="weekday" name="weekday" min="0" max="6" required>
+            </div>
+
+            <div class="form-group">
+                <label for="year"><i class="fas fa-calendar"></i> Year:</label>
+                <input type="number" id="year" name="year" required>
+            </div>
+
+            <div class="form-group">
+                <label for="distance"><i class="fas fa-road"></i> Distance (km):</label>
+                <input type="number" id="distance" name="distance" step="0.1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bearing"><i class="fas fa-compass"></i> Bearing:</label>
+                <input type="number" id="bearing" name="bearing" step="0.1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="car_condition"><i class="fas fa-car"></i> Car Condition:</label>
+                <select id="car_condition" name="car_condition" required>
+                    <option value=0>Bad</option>
+                    <option value=1>Very Good</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="weather"><i class="fas fa-cloud-sun"></i> Weather:</label>
+                <select id="weather" name="weather" required>
+                    <option value=0>Sunny</option>
+                    <option value=1>Windy</option>
+                </select>
+            </div>
+
+            <button type="submit">Submit</button>
+        </form>
+        {% if prediction is not None %}
+        <h2>Prediction: {{ prediction }}</h2>
+        {% endif %}
+    </div>
+</body>
+</html>
